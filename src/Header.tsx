@@ -1,19 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container } from './Header.style';
+import { Container, Nav, Ul, Li, Link } from './Header.style';
 
 const Header = (): JSX.Element => (
   <Container>
-    <nav>
-      <ul>
-        <li>
-          <Link to="/repository-1">repository 1</Link>
-        </li>
-        <li>
-          <Link to="/repository-2">repository 2</Link>
-        </li>
-      </ul>
-    </nav>
+    <Nav>
+      <Ul>
+        <Li>
+          <Link to="/repository-1">REPOSITORY 1</Link>
+        </Li>
+        <Li>
+          <Link to="/repository-2">REPOSITORY 2</Link>
+        </Li>
+      </Ul>
+    </Nav>
   </Container>
 );
 

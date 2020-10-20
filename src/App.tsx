@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import MicroFrontend from './MicroFrontend';
 import NotFound from './NotFound';
 import Header from './Header';
-import { Container, Body } from './App.style';
 
 interface Props {
   history: History;
@@ -19,17 +18,17 @@ const REPOSITORY_2 = ({ history }: Props) => (
 
 const App = (): JSX.Element => {
   return (
-    <Container>
+    <div>
       <Header />
-      <Body>
+      <div>
         <Switch>
           <Redirect exact from="/" to="/repository-1" />
           <Route path="/repository-1" component={REPOSITORY_1} />
           <Route path="/repository-2" component={REPOSITORY_2} />
           <Route component={NotFound} />
         </Switch>
-      </Body>
-    </Container>
+      </div>
+    </div>
   );
 };
 

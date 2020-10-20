@@ -1,10 +1,9 @@
 import React from 'react';
-import { Container } from './NotFound.style';
 
 const NotFound = (): JSX.Element => (
-  <Container>
+  <div>
     <h1>404 page</h1>
-  </Container>
+  </div>
 );
 
 export default NotFound;

@@ -1,6 +1,0 @@
-import styled from 'styled-components';
-
-// eslint-disable-next-line import/prefer-default-export
-export const MountPoint = styled.div`
-  display: block;
-`;

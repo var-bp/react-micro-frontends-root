@@ -1,8 +1,7 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useCallback, useRef, useState } from 'react';
 import { History } from 'history';
 import axios from 'axios';
 import { useRouteMatch } from 'react-router-dom';
-import { MountPoint } from './MicroFrontend.style';
 
 interface MicroFrontendProps {
   name: string;
@@ -15,69 +14,90 @@ const MicroFrontend = ({ name, host, history }: MicroFrontendProps): JSX.Element
 
   const parentRouteMatch = useRouteMatch();
 
+  const [isManifestFetched, setIsManifestFetched] = useState(false);
+  const [entrypoints, setEntrypoints] = useState([]);
+
   const isScriptsInjected = useCallback(() => {
-    const arr = [...Array(injectedScriptsRef.current).keys()];
-    return arr.length
-      ? arr.every(
-          (i: number) => !!document.querySelector(`#micro-frontend-script-${name}-${i + 1}`),
-        )
-      : false;
+    return !!document.querySelectorAll(`[id^="micro-frontend-script-${name}-"]`).length;
   }, [name]);
 
   const renderMicroFrontend = useCallback(() => {
-    window[`render${name}`](`${name}-container`, history, parentRouteMatch);
+    try {
+      window[`render${name}`](`${name}-container`, history, parentRouteMatch);
+    } catch (error) {
+      // Failed to mount micro-frontend
+    }
   }, [history, name, parentRouteMatch]);
 
   const unmountMicroFrontend = useCallback(() => {
-    window[`unmount${name}`](`${name}-container`);
+    try {
+      window[`unmount${name}`](`${name}-container`);
+    } catch (error) {
+      // Micro-frontend did not unmount cleanly - ensure all effects return valid cleanup functions
+    }
   }, [name]);
 
-  const injectScripts = useCallback(async () => {
+  const fetchManifest = useCallback(async () => {
+    setIsManifestFetched(false);
     try {
       window[`hostOf${name}`] = host;
       const { data } = await axios.get(`${host}/asset-manifest.json`);
-      data.entrypoints.forEach((entrypoint: string, i: number) => {
-        const script = document.createElement('script');
-        script.id = `micro-frontend-script-${name}-${i + 1}`;
-        script.crossOrigin = 'anonymous';
-        script.defer = true;
-        script.onload = () => {
-          injectedScriptsRef.current += 1;
-          if (data.entrypoints.length === injectedScriptsRef.current) {
-            renderMicroFrontend();
-          }
-        };
-        script.onerror = () => {
-          // Failed to mount micro-frontend
-          history.push('/fail-to-mount');
-        };
-        script.src = `${host}/${entrypoint}`;
-        document.head.appendChild(script);
-      });
+      setIsManifestFetched(true);
+      setEntrypoints(data.entrypoints);
     } catch (err) {
-      // Failed to mount micro-frontend
-      history.push('/fail-to-mount');
+      // Failed to fetch asset manifest
     }
-  }, [history, host, name, renderMicroFrontend]);
+  }, [host, name]);
+
+  const injectScripts = useCallback(() => {
+    entrypoints.forEach((entrypoint: string, i: number) => {
+      const script =
+        document.querySelector(`#micro-frontend-script-${name}-${i + 1}`) ||
+        document.createElement('script');
+      script.id = `micro-frontend-script-${name}-${i + 1}`;
+      script.crossOrigin = 'anonymous';
+      script.defer = true;
+      script.onload = () => {
+        injectedScriptsRef.current += 1;
+        if (entrypoints.length === injectedScriptsRef.current) {
+          renderMicroFrontend();
+        }
+      };
+      script.onerror = () => {
+        // Failed to mount micro-frontend
+      };
+      script.src = `${host}/${entrypoint}`;
+      document.head.appendChild(script);
+    });
+  }, [entrypoints, host, name, renderMicroFrontend]);
 
   useEffect(() => {
-    if (isScriptsInjected()) {
-      renderMicroFrontend();
-    } else {
-      injectScripts();
+    fetchManifest();
+  }, [fetchManifest]);
+
+  useLayoutEffect(() => {
+    if (isManifestFetched && entrypoints.length) {
+      if (isScriptsInjected()) {
+        renderMicroFrontend();
+      } else {
+        injectScripts();
+      }
     }
     return () => {
-      if (isScriptsInjected()) {
-        try {
-          unmountMicroFrontend();
-        } catch (error) {
-          // Micro-frontend did not unmount cleanly - ensure all effects return valid cleanup functions
-        }
+      if (isManifestFetched && entrypoints.length && isScriptsInjected()) {
+        unmountMicroFrontend();
       }
     };
-  }, [host, name, injectScripts, unmountMicroFrontend, renderMicroFrontend, isScriptsInjected]);
+  }, [
+    isManifestFetched,
+    entrypoints,
+    injectScripts,
+    unmountMicroFrontend,
+    renderMicroFrontend,
+    isScriptsInjected,
+  ]);
 
-  return <MountPoint id={`${name}-container`} />;
+  return <div id={`${name}-container`} />;
 };
 
 export default MicroFrontend;
