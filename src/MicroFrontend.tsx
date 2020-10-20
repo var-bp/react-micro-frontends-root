@@ -14,7 +14,6 @@ const MicroFrontend = ({ name, host, history }: MicroFrontendProps): JSX.Element
 
   const parentRouteMatch = useRouteMatch();
 
-  const [isManifestFetched, setIsManifestFetched] = useState(false);
   const [entrypoints, setEntrypoints] = useState([]);
 
   const isScriptsInjected = useCallback(() => {
@@ -38,11 +37,9 @@ const MicroFrontend = ({ name, host, history }: MicroFrontendProps): JSX.Element
   }, [name]);
 
   const fetchManifest = useCallback(async () => {
-    setIsManifestFetched(false);
     try {
       window[`hostOf${name}`] = host;
       const { data } = await axios.get(`${host}/asset-manifest.json`);
-      setIsManifestFetched(true);
       setEntrypoints(data.entrypoints);
     } catch (err) {
       // Failed to fetch asset manifest
@@ -76,7 +73,7 @@ const MicroFrontend = ({ name, host, history }: MicroFrontendProps): JSX.Element
   }, [fetchManifest]);
 
   useLayoutEffect(() => {
-    if (isManifestFetched && entrypoints.length) {
+    if (entrypoints.length) {
       if (isScriptsInjected()) {
         renderMicroFrontend();
       } else {
@@ -84,18 +81,11 @@ const MicroFrontend = ({ name, host, history }: MicroFrontendProps): JSX.Element
       }
     }
     return () => {
-      if (isManifestFetched && entrypoints.length && isScriptsInjected()) {
+      if (entrypoints.length && isScriptsInjected()) {
         unmountMicroFrontend();
       }
     };
-  }, [
-    isManifestFetched,
-    entrypoints,
-    injectScripts,
-    unmountMicroFrontend,
-    renderMicroFrontend,
-    isScriptsInjected,
-  ]);
+  }, [entrypoints, injectScripts, unmountMicroFrontend, renderMicroFrontend, isScriptsInjected]);
 
   return <div id={`${name}-container`} />;
 };
