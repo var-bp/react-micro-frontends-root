@@ -4,6 +4,10 @@ This TypeScript based template is designed to get you up and running with a bunc
 
 The primary goal of this project is to provide a stable foundation upon which to build modern web applications. Its purpose is not to dictate your project structure or to demonstrate a complete real-world application, but to provide a set of tools intended to make front-end development robust, easy, and, most importantly, fun.
 
+## Micro Frontends
+
+Good frontend development is hard. Scaling frontend development so that many teams can work simultaneously on a large and complex product is even harder. In [this](https://martinfowler.com/articles/micro-frontends.html) article we'll describe a recent trend of breaking up frontend monoliths into many smaller, more manageable pieces, and how this architecture can increase the effectiveness and efficiency of teams working on frontend code. As well as talking about the various benefits and costs, we'll cover some of the implementation options that are available, and we'll dive deep into a full example application that demonstrates the technique.
+
 ## Tips & Tricks
 - [favicon generator](https://www.favicon-generator.org/)
 - compression
