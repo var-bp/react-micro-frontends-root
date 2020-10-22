@@ -2,8 +2,6 @@
   "name": "root",
   "version": "1.0.0",
   "description": "React template",
-  "license": "ISC",
-  "main": "src/index.tsx",
   "scripts": {
     "build": "webpack --progress --config config/webpack.prod.js",
     "lint:css": "stylelint './**/*/*.{scss,sass,css,ts,tsx,js,jsx}'",
