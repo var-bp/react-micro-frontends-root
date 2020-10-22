@@ -50,6 +50,9 @@ Good frontend development is hard. Scaling frontend development so that many tea
   - axios
   - @loadable/component (enable code splitting)
 
+## Important note
+All your npm packages from `dependencies` must be the same version across all you react-micro-frontends repositories.
+
 ## Installation
 Create `.env` file on the root of the project.
 ```
