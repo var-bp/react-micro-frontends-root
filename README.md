@@ -1,11 +1,9 @@
 # React Template
-
 This TypeScript based template is designed to get you up and running with a bunch of awesome front-end technologies.
 
 The primary goal of this project is to provide a stable foundation upon which to build modern web applications. Its purpose is not to dictate your project structure or to demonstrate a complete real-world application, but to provide a set of tools intended to make front-end development robust, easy, and, most importantly, fun.
 
 ## Micro Frontends
-
 Good frontend development is hard. Scaling frontend development so that many teams can work simultaneously on a large and complex product is even harder. In [this](https://martinfowler.com/articles/micro-frontends.html) article we'll describe a recent trend of breaking up frontend monoliths into many smaller, more manageable pieces, and how this architecture can increase the effectiveness and efficiency of teams working on frontend code. As well as talking about the various benefits and costs, we'll cover some of the implementation options that are available, and we'll dive deep into a full example application that demonstrates the technique.
 
 ## Tips & Tricks
@@ -53,9 +51,14 @@ Good frontend development is hard. Scaling frontend development so that many tea
   - @loadable/component (enable code splitting)
 
 ## Installation
+Create `.env` file on the root of the project.
+```
+MICROFRONTEND_NAME=ROOT
+REPOSITORY_1_HOST=http://localhost:3001
+REPOSITORY_2_HOST=http://localhost:3002
+```
 
 Install the project dependencies.
-
 ```bash
 $ npm i
 ```
@@ -63,7 +66,6 @@ $ npm i
 We recommend using the [Redux DevTools Chrome Extension](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd). Using the chrome extension allows your monitors to run on a separate thread and affords better performance and functionality. It comes with several of the most popular monitors, is easy to configure, filters actions, and doesn't require installing any packages in your project.
 
 ## Running the Project
-
 After completing the [installation](#installation) step, you're ready to start the project!
 
 ```bash
@@ -86,5 +88,4 @@ While developing, you will probably rely mostly on `npm run start` however, ther
 |`test:coverage`    |Generates information about coverage to ./coverage|
 
 ## Testing
-
 To add a unit test, create a `.spec.js` or `.test.js` file anywhere inside of `./src`. Jest and webpack will automatically find these files.
