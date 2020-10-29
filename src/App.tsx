@@ -18,7 +18,7 @@ const REPOSITORY_2 = ({ history }: Props) => (
 
 const App = (): JSX.Element => {
   return (
-    <div>
+    <div data-testid="app">
       <Header />
       <div>
         <Switch>

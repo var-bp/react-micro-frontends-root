@@ -1,18 +1,18 @@
 {
-  "name": "root",
+  "name": "react-micro-frontends-root",
   "version": "1.0.0",
   "description": "React template",
   "scripts": {
-    "build": "webpack --progress --config config/webpack.prod.js",
+    "build": "webpack --progress --config webpack/webpack.prod.js",
     "lint:css": "stylelint './**/*/*.{scss,sass,css,ts,tsx,js,jsx}'",
     "lint:css:fix": "npm run lint:css -- --fix",
     "lint:js": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:js:fix": "npm run lint:js -- --fix",
-    "start": "webpack-dev-server --config config/webpack.dev.js",
-    "start:prod": "node config/server.prod.js",
-    "test": "jest --config config/jest.js --passWithNoTests",
-    "test:coverage": "jest --config config/jest.js --coverage --colors --passWithNoTests",
-    "test:watch": "jest --config config/jest.js --watch"
+    "start": "webpack-dev-server --config webpack/webpack.dev.js",
+    "start:prod": "node webpack/server.prod.js",
+    "test": "jest --config jest/jest.js --passWithNoTests",
+    "test:coverage": "jest --config jest/jest.js --coverage --colors --passWithNoTests",
+    "test:watch": "jest --config jest/jest.js --watch"
   },
   "dependencies": {
     "@loadable/component": "5.13.2",

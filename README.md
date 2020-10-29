@@ -79,16 +79,16 @@ While developing, you will probably rely mostly on `npm run start` however, ther
 
 |`npm run <script>` |Description|
 |-------------------|-----------|
-|`build`            |Builds prod app to ./build|
-|`lint:css`         |Lints the project for potential errors|
-|`lint:css:fix`      |Lints the project and fixes all correctable errors|
-|`lint:js`          |Lints the project for potential errors|
-|`lint:js:fix`       |Lints the project and fixes all correctable errors|
-|`start`            |Serves your dev app at `localhost:3000`|
-|`start:prod`       |Serves your prod app at `localhost:8080`|
-|`test`             |Runs unit tests with Jest|
-|`test:watch`       |Runs `test` in watch mode to re-run tests when changed|
-|`test:coverage`    |Generates information about coverage to ./coverage|
+|`build`            |Build prod app to ./build|
+|`lint:css`         |Lint the project for potential errors|
+|`lint:css:fix`      |Lint the project and fixes all correctable errors|
+|`lint:js`          |Lint the project for potential errors|
+|`lint:js:fix`       |Lint the project and fixes all correctable errors|
+|`start`            |Serve your dev app at `localhost:3000`|
+|`start:prod`       |Serve your prod app at `localhost:8080`|
+|`test`             |Run unit tests with Jest|
+|`test:watch`       |Run `test` in watch mode to re-run tests when changed|
+|`test:coverage`    |Generate information about coverage to ./coverage|
 
 ## Testing
-To add a unit test, create a `.spec.js` or `.test.js` file anywhere inside of `./src`. Jest and webpack will automatically find these files.
+To add a unit test, create a `.spec.tsx` or `.test.tsx` file anywhere inside of `./src`. Jest and webpack will automatically find these files.

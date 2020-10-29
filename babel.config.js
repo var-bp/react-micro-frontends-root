@@ -13,7 +13,7 @@ module.exports = {
         'transform-react-remove-prop-types',
         '@babel/plugin-transform-react-inline-elements',
         '@babel/plugin-transform-react-constant-elements',
-        ['react-remove-properties', { properties: ['data-test'] }],
+        ['react-remove-properties', { properties: ['data-testid'] }],
       ],
     },
     test: {
