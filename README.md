@@ -53,6 +53,18 @@ Good frontend development is hard. Scaling frontend development so that many tea
 ## Important note
 All your npm packages from `dependencies` must be the same version across all you react-micro-frontends repositories.
 
+## How to share redux store in micro frontend architecture
+If you are using redux, the usual approach is to have a single, global, shared store for the entire application. However, if each micro-frontend is supposed to be its own self-contained application, then it makes sense for each one to have its own redux store. The redux docs even mention "isolating a Redux app as a component in a bigger application" as a valid reason to have multiple stores.
+
+Long story short: Don't share your redux store
+
+Sharing anything between your micro frontends no longer makes them separate entities and defeats the entire purpose of it. Now it's just an overengineered monolith. Just turn those respective repos into well-defined modules inside a monolith repo. It is still possible to split responsibilities into their own silos in a unified repo. It just takes more discipline.
+
+Problems of a single shared state:
+- Accidental override of state of other apps (in case duplicate actions are dispatched by multiple apps)
+- Apps would have to be aware of other Micro Frontends
+- Shared middlewares. Since only a single store is maintained, all the Micro Frontends would have to share the same middlewares. So in situations where one app wants to use redux-saga and other wants to use redux-thunk is not possible.
+
 ## Installation
 Create `.env` file on the root of the project.
 ```
